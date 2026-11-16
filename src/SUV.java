@@ -1,5 +1,7 @@
 public class SUV {
-    public static void
+    public String;
+
+    }
 
 
 }
