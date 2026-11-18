@@ -14,28 +14,31 @@ public class SUV extends Vehicle {
             this.terrainMode = terrainMode;
         }
 
+        public void setSeatingCapacity(int seatingCapacity)
+        {
+            this.seatingCapacity = seatingCapacity;
+        }
+
         public int getSeatingCapacity() {
             return seatingCapacity;
         }
 
-        public void setSeatingCapacity(int seatingCapacity) {
-            this.seatingCapacity = seatingCapacity;
+        public void setEntertainmentSystem(String entertainmentSystem)
+        {
+            this.entertainmentSystem = entertainmentSystem;
         }
 
         public String getEntertainmentSystem() {
             return entertainmentSystem;
         }
 
-        public void setEntertainmentSystem(String entertainmentSystem) {
-            this.entertainmentSystem = entertainmentSystem;
+        public void setTerrainMode(String terrainMode)
+        {
+            this.terrainMode = terrainMode;
         }
 
         public String getTerrainMode() {
             return terrainMode;
-        }
-
-        public void setTerrainMode(String terrainMode) {
-            this.terrainMode = terrainMode;
         }
 
     }
