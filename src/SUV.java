@@ -26,7 +26,7 @@ public class SUV extends Vehicle {
             this.entertainmentSystem = entertainmentSystem;
         }
 
-        public String getEntertainmentSystem() {
+        public String entertainmentSystem() {
             return entertainmentSystem;
         }
 
@@ -34,7 +34,7 @@ public class SUV extends Vehicle {
             this.terrainMode = terrainMode;
         }
 
-        public String getTerrainMode() {
+        public String terrainMode() {
             return terrainMode;
         }
 
