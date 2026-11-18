@@ -8,7 +8,7 @@ public class SUV extends Vehicle {
         }
 
         public SUV(String vehicleID, String brand, String model, double dailyRental, String status, String addOns, int seatingCapacity, String entertainmentSystem, String terrainMode) {
-            super(vehicleID, brand, model, dailyRental, status, addOns)
+            super
             this.seatingCapacity = seatingCapacity;
             this.entertainmentSystem = entertainmentSystem;
             this.terrainMode = terrainMode;
