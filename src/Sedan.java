@@ -18,4 +18,9 @@ public class Sedan extends Vehicle {
     public void setFuelEfficiency(double fuelEfficiency) {
         this.fuelEfficiency = fuelEfficiency;
     }
+
+    public void displaySedanDetails(){
+        System.out.println("Luggage Capacity:" + luggageCapacity);
+        System.out.println("Fuel Efficiency:" + fuelEfficiency);
+    }
 }
