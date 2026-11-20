@@ -37,5 +37,4 @@ public class SUV extends Vehicle {
         public String terrainMode() {
             return terrainMode;
         }
-
     }
