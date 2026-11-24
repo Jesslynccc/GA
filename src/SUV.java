@@ -30,13 +30,5 @@ public class SUV extends Vehicle {
             return entertainmentSystem;
         }
 
-        public void setTerrainMode(String terrainMode) {
-            this.terrainMode = terrainMode;
-        }
-
-        public String terrainMode() {
-            return terrainMode;
-        }
-
 
     }
