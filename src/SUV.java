@@ -42,9 +42,4 @@ public class SUV extends Vehicle {
                     + "\nEntertainment System: " + entertainmentSystem
                     + "\nTerrain Mode: " + terrainMode;
         }
-
-
-
-
-
-    }
+}
