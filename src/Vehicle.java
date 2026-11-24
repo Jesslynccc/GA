@@ -16,7 +16,54 @@ public class Vehicle {
 
     }
 
-    public void
+    public void setVehicleID(String vehicleID) {
+        this.vehicleID = vehicleID;
+    }
+
+    public String getVehicleID() {
+        return vehicleID;
+    }
+
+    public void setBrand(String Brand) {
+        this.brand = brand;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setDailyRental(double dailyRental) {
+        this.dailyRental = dailyRental;
+    }
+
+    public double dailyRental() {
+        return dailyRental;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setAddOns(String addOns) {
+        this.addOns = addOns;
+    }
+
+    public String getAddOns() {
+        return addOns;
+    }
+
 
 
 }
