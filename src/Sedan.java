@@ -2,6 +2,11 @@ public class Sedan extends Vehicle {
     private int luggageCapacity;
     private double fuelEfficiency;
 
+    public Sedan(String vehicleID, String brand, String model, double dailyRental, String status, String addOns, int luggageCapacity, double fuelEfficiency){
+        super(vehicleID, brand, model, dailyRental, status, addOns);
+        this.luggageCapacity = luggageCapacity;
+        this.fuelEfficiency = fuelEfficiency;
+    }
 
     public int getLuggageCapacity() {
         return luggageCapacity;
@@ -19,8 +24,10 @@ public class Sedan extends Vehicle {
         this.fuelEfficiency = fuelEfficiency;
     }
 
-    public void displaySedanDetails(){
-        System.out.println("Luggage Capacity:" + luggageCapacity);
-        System.out.println("Fuel Efficiency:" + fuelEfficiency);
+    @Override
+    public String toString() {
+        return super.toString()
+                + "\nLuggage Capacity: " + luggageCapacity
+                + "\nFuel Efficiency: " + fuelEfficiency;
     }
 }
