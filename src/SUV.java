@@ -35,13 +35,16 @@ public class SUV extends Vehicle {
             return terrainMode;
         }
 
-        public void displayDetails() {
-            System.out.println("Vehicle Type: SUV");
-            System.out.println("Vehicle ID " + getVehicleID());
-            System.out.println("Brand: " + getBrand());
-            System.out.println("Model : " + getModel());
-
+        @Override
+        public String toString() {
+            return super.toString()
+                    + "\nSeating Capacity: " + seatingCapacity
+                    + "\nEntertainment System: " + entertainmentSystem
+                    + "\nTerrain Mode: " + terrainMode;
         }
+
+
+
 
 
     }
