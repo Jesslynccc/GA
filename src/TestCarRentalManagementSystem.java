@@ -1,9 +1,14 @@
+
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class TestCarRentalManagementSystem {
 
     public static void main(String[] args) {
+
         Scanner input = new Scanner(System.in);
 
         Driver driver1 = new Driver("C001", 0);
@@ -48,6 +53,7 @@ public class TestCarRentalManagementSystem {
             }
 
             switch (choice) {
+
                 case 1:
                     viewAvailableVehicles(vehicles);
                     break;
@@ -178,11 +184,13 @@ public class TestCarRentalManagementSystem {
                                 valid = true;
                             }
                             else {
-                                System.out.println("Invalid days! Please enter again.");
+                                System.out.println(
+                                        "Invalid days! Please enter again.");
                             }
                         }
                         catch (InputMismatchException e) {
-                            System.out.println("Invalid input! Please enter a number.");
+                            System.out.println(
+                                    "Invalid input! Please enter a number.");
                             input.next();
                         }
                     }
@@ -219,6 +227,17 @@ public class TestCarRentalManagementSystem {
                             vehicles[i].getDailyRental() * days * (1 - discountRate);
 
                     System.out.println("Final Amount: RM" + totalAmount);
+
+                    // Bonus: Save order details to a text file
+                    saveOrderToFile(
+                            vehicles[i].getVehicleID(),
+                            returnedCustomerID,
+                            days,
+                            vehicles[i].getDailyRental(),
+                            membership,
+                            discountRate,
+                            totalAmount
+                    );
 
                     vehicles[i].setStatus("Available");
 
@@ -260,5 +279,53 @@ public class TestCarRentalManagementSystem {
     public static void exit() {
 
         System.out.println("Thank you for using Car Rental System!");
+    }
+
+    // Bonus: File I/O - Save Order Details
+    public static void saveOrderToFile(String vehicleID,
+                                       String customerID,
+                                       int days,
+                                       double dailyRental,
+                                       String membership,
+                                       double discountRate,
+                                       double totalAmount) {
+
+        try (BufferedWriter writer =
+                     new BufferedWriter(new FileWriter("RentalOrders.txt", true))) {
+
+            writer.write("===== RENTAL ORDER =====");
+            writer.newLine();
+
+            writer.write("Vehicle ID: " + vehicleID);
+            writer.newLine();
+
+            writer.write("Customer ID: " + customerID);
+            writer.newLine();
+
+            writer.write("Rental Days: " + days);
+            writer.newLine();
+
+            writer.write("Daily Rental: RM" + dailyRental);
+            writer.newLine();
+
+            writer.write("Membership: " + membership);
+            writer.newLine();
+
+            writer.write("Discount: " + (discountRate * 100) + "%");
+            writer.newLine();
+
+            writer.write("Total Amount: RM" + totalAmount);
+            writer.newLine();
+
+            writer.write("========================");
+            writer.newLine();
+            writer.newLine();
+
+            System.out.println("Order details saved successfully!");
+
+        }
+        catch (IOException e) {
+            System.out.println("Error writing order details to file.");
+        }
     }
 }
