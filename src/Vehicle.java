@@ -1,4 +1,4 @@
-public class Vehicle {
+public abstract class  Vehicle {
     private String vehicleID;
     private String brand;
     private String model;
@@ -11,7 +11,7 @@ public class Vehicle {
         this.brand = brand;
         this.model = model;
         this.dailyRental = dailyRental;
-        this. status = status;
+        this.status = status;
         this.addOns = addOns;
 
     }
@@ -62,6 +62,15 @@ public class Vehicle {
 
     public String getAddOns() {
         return addOns;
+    }
+    @Override
+    public String toString() {
+        return "Vehicle ID: " + vehicleID
+                + "\nBrand: " + brand
+                + "\nModel: " + model
+                + "\nDaily Rental: " + dailyRental
+                + "\nStatus: " + status
+                + "\nAdd Ons: " + addOns;
     }
 
 
