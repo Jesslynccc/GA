@@ -2,8 +2,8 @@ public class Sedan extends Vehicle {
     private int luggageCapacity;
     private double fuelEfficiency;
 
-    public Sedan(String vehicleID, String brand, String model, double dailyRental, String status, String addOns, int luggageCapacity, double fuelEfficiency){
-        super(vehicleID, brand, model, dailyRental, status, addOns);
+    public Sedan(String vehicleID, String brand, String model, double dailyRental, String status, int luggageCapacity, double fuelEfficiency){
+        super(vehicleID, brand, model, dailyRental, status);
         this.luggageCapacity = luggageCapacity;
         this.fuelEfficiency = fuelEfficiency;
     }
