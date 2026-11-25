@@ -42,7 +42,7 @@ public abstract class  Vehicle {
         this.dailyRental = dailyRental;
     }
 
-    public double dailyRental() {
+    public double getDailyRental() {
         return dailyRental;
     }
 
