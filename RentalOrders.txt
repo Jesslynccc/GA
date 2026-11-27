@@ -28,3 +28,33 @@ Discount: 0.0%
 Total Amount: RM240.0
 ========================
 
+===== RENTAL ORDER =====
+Vehicle ID: S001
+Customer ID: C001
+Rental Days: 2
+Daily Rental: RM120.0
+Membership: Regular
+Discount: 10.0%
+Total Amount: RM216.0
+========================
+
+===== RENTAL ORDER =====
+Vehicle ID: S001
+Customer ID: C001
+Rental Days: 2
+Daily Rental: RM120.0
+Membership: Regular
+Discount: 10.0%
+Total Amount: RM216.0
+========================
+
+===== RENTAL ORDER =====
+Vehicle ID: S001
+Customer ID: C001
+Rental Days: 2
+Daily Rental: RM120.0
+Membership: Regular
+Discount: 10.0%
+Total Amount: RM216.0
+========================
+

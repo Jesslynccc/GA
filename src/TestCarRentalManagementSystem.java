@@ -110,12 +110,36 @@ public class TestCarRentalManagementSystem {
 
         String vehicleID = input.next();
         boolean found = false;
+        int vehicleIndex = -1;
 
+        // Check Vehicle ID
+        for (int i = 0; i < vehicles.length; i++) {
+
+            if (vehicles[i].getVehicleID().equals(vehicleID)) {
+                found = true;
+                vehicleIndex = i;
+                break;
+            }
+        }
+
+        if (found == false) {
+            System.out.println("Vehicle not found!");
+            return;
+        }
+
+        // Check Vehicle Availability
+        if (!vehicles[vehicleIndex].getStatus().equals("Available")) {
+            System.out.println("Vehicle is not available!");
+            return;
+        }
+
+        // Enter Customer ID
         System.out.println("Enter Customer ID: ");
         String customerID = input.next();
 
         int customerIndex = -1;
 
+        // Check Customer ID
         for (int j = 0; j < drivers.length; j++) {
 
             if (drivers[j].getDriverID().equals(customerID)) {
@@ -129,31 +153,16 @@ public class TestCarRentalManagementSystem {
             return;
         }
 
-        for (int i = 0; i < vehicles.length; i++) {
+        // Complete Booking
+        vehicles[vehicleIndex].setStatus("Rented");
+        bookedCustomerIDs[vehicleIndex] = customerID;
 
-            if (vehicles[i].getVehicleID().equals(vehicleID)) {
-
-                found = true;
-
-                if (vehicles[i].getStatus().equals("Available")) {
-
-                    vehicles[i].setStatus("Rented");
-                    bookedCustomerIDs[i] = customerID;
-
-                    System.out.println("Booking Successful!");
-                    break;
-                }
-                else {
-                    System.out.println("Vehicle is not available!");
-                    break;
-                }
-            }
-        }
-
-        if (found == false) {
-            System.out.println("Vehicle not found!");
-        }
+        System.out.println("Booking Successful!");
     }
+
+
+
+
 
     // Feature 3: Return, Checkout and Billing
     public static void returnCheckoutBilling(Vehicle[] vehicles,
