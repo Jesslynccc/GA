@@ -1,8 +1,8 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class TestCarRentalManagementSystem {
 
@@ -31,6 +31,9 @@ public class TestCarRentalManagementSystem {
                 220.0, "Available", 5, "Apple CarPlay", "Normal");
 
         Vehicle[] vehicles = {vios, city, fortuner, crv};
+
+        // Load previous system data
+        loadSystemData(vehicles, drivers, bookedCustomerIDs);
 
         int choice = 0;
 
@@ -62,7 +65,8 @@ public class TestCarRentalManagementSystem {
                     break;
 
                 case 3:
-                    returnCheckoutBilling(vehicles, input, drivers, bookedCustomerIDs);
+                    returnCheckoutBilling(vehicles, input, drivers,
+                            bookedCustomerIDs);
                     break;
 
                 case 4:
@@ -70,6 +74,7 @@ public class TestCarRentalManagementSystem {
                     break;
 
                 case 5:
+                    saveSystemData(vehicles, drivers, bookedCustomerIDs);
                     exit();
                     break;
 
@@ -223,11 +228,12 @@ public class TestCarRentalManagementSystem {
                     }
 
                     double totalAmount =
-                            vehicles[i].getDailyRental() * days * (1 - discountRate);
+                            vehicles[i].getDailyRental() * days
+                                    * (1 - discountRate);
 
                     System.out.println("Final Amount: RM" + totalAmount);
 
-                    // Bonus: Save order details to a text file
+                    // Bonus: Save order details
                     saveOrderToFile(
                             vehicles[i].getVehicleID(),
                             returnedCustomerID,
@@ -289,42 +295,167 @@ public class TestCarRentalManagementSystem {
                                        double discountRate,
                                        double totalAmount) {
 
-        try (BufferedWriter writer =
-                     new BufferedWriter(new FileWriter("RentalOrders.txt", true))) {
+        File file = new File("RentalOrders.txt");
 
-            writer.write("===== RENTAL ORDER =====");
-            writer.newLine();
+        String oldOrders = "";
 
-            writer.write("Vehicle ID: " + vehicleID);
-            writer.newLine();
+        // Read previous orders first
+        if (file.exists()) {
 
-            writer.write("Customer ID: " + customerID);
-            writer.newLine();
+            try (Scanner fileInput = new Scanner(file)) {
 
-            writer.write("Rental Days: " + days);
-            writer.newLine();
+                while (fileInput.hasNextLine()) {
+                    oldOrders = oldOrders + fileInput.nextLine() + "\n";
+                }
+            }
+            catch (IOException ex) {
+                System.out.println(ex.getMessage());
+                return;
+            }
+        }
 
-            writer.write("Daily Rental: RM" + dailyRental);
-            writer.newLine();
+        // Write previous orders and new order
+        try (PrintWriter pw = new PrintWriter(file)) {
 
-            writer.write("Membership: " + membership);
-            writer.newLine();
+            pw.print(oldOrders);
 
-            writer.write("Discount: " + (discountRate * 100) + "%");
-            writer.newLine();
-
-            writer.write("Total Amount: RM" + totalAmount);
-            writer.newLine();
-
-            writer.write("========================");
-            writer.newLine();
-            writer.newLine();
+            pw.println("===== RENTAL ORDER =====");
+            pw.println("Vehicle ID: " + vehicleID);
+            pw.println("Customer ID: " + customerID);
+            pw.println("Rental Days: " + days);
+            pw.println("Daily Rental: RM" + dailyRental);
+            pw.println("Membership: " + membership);
+            pw.println("Discount: " + (discountRate * 100) + "%");
+            pw.println("Total Amount: RM" + totalAmount);
+            pw.println("========================");
+            pw.println();
 
             System.out.println("Order details saved successfully!");
 
         }
-        catch (IOException e) {
-            System.out.println("Error writing order details to file.");
+        catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // Bonus: Save System Data
+    public static void saveSystemData(Vehicle[] vehicles,
+                                      Driver[] drivers,
+                                      String[] bookedCustomerIDs) {
+
+        String fileName =
+                "CarRentalData_" + System.currentTimeMillis() + ".txt";
+
+        File file = new File(fileName);
+
+        try (PrintWriter pw = new PrintWriter(file)) {
+
+            for (int i = 0; i < drivers.length; i++) {
+
+                pw.println("DRIVER");
+                pw.println(drivers[i].getDriverID());
+                pw.println(drivers[i].getCompletedRentals());
+            }
+
+            for (int i = 0; i < vehicles.length; i++) {
+
+                pw.println("VEHICLE");
+                pw.println(vehicles[i].getVehicleID());
+                pw.println(vehicles[i].getStatus());
+                pw.println(bookedCustomerIDs[i]);
+            }
+
+            System.out.println("System data saved successfully!");
+
+        }
+        catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // Bonus: Load System Data
+    public static void loadSystemData(Vehicle[] vehicles,
+                                      Driver[] drivers,
+                                      String[] bookedCustomerIDs) {
+
+        File folder = new File(".");
+        File[] files = folder.listFiles();
+
+        File latestFile = null;
+
+        if (files != null) {
+
+            for (int i = 0; i < files.length; i++) {
+
+                if (files[i].getName().startsWith("CarRentalData_")
+                        && files[i].getName().endsWith(".txt")) {
+
+                    if (latestFile == null ||
+                            files[i].lastModified() > latestFile.lastModified()) {
+
+                        latestFile = files[i];
+                    }
+                }
+            }
+        }
+
+        if (latestFile == null) {
+            System.out.println("No saved data found. Starting new system.");
+            return;
+        }
+
+        try (Scanner fileInput = new Scanner(latestFile)) {
+
+            while (fileInput.hasNextLine()) {
+
+                String recordType = fileInput.nextLine();
+
+                if (recordType.equals("DRIVER")) {
+
+                    if (fileInput.hasNextLine()) {
+
+                        String driverID = fileInput.nextLine();
+                        int completedRentals =
+                                Integer.parseInt(fileInput.nextLine());
+
+                        for (int i = 0; i < drivers.length; i++) {
+
+                            if (drivers[i].getDriverID().equals(driverID)) {
+
+                                drivers[i].setCompletedRentals(completedRentals);
+                            }
+                        }
+                    }
+                }
+
+                else if (recordType.equals("VEHICLE")) {
+
+                    if (fileInput.hasNextLine()) {
+
+                        String vehicleID = fileInput.nextLine();
+                        String status = fileInput.nextLine();
+                        String customerID = fileInput.nextLine();
+
+                        for (int i = 0; i < vehicles.length; i++) {
+
+                            if (vehicles[i].getVehicleID().equals(vehicleID)) {
+
+                                vehicles[i].setStatus(status);
+                                bookedCustomerIDs[i] = customerID;
+                            }
+                        }
+                    }
+                }
+            }
+
+            System.out.println("System data loaded successfully!");
+
+        }
+        catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        catch (NumberFormatException ex) {
+            System.out.println("Invalid saved data.");
         }
     }
 }
